@@ -2,6 +2,7 @@ use std::fs;
 use structopt::StructOpt;
 
 mod day01;
+mod day02;
 
 #[derive(StructOpt)]
 struct Cli {
@@ -16,6 +17,8 @@ fn main() {
     let result = match (day, part) {
         (1, 1) => Ok(day01::part1(input_file)),
         (1, 2) => Ok(day01::part2(input_file)),
+        (2, 1) => Ok(day02::part1(input_file)),
+        (2, 2) => Ok(day02::part2(input_file)),
         _ => Err("Unsupported solution"),
     };
 
