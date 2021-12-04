@@ -3,6 +3,7 @@ use structopt::StructOpt;
 
 mod day01;
 mod day02;
+mod day03;
 
 #[derive(StructOpt)]
 struct Cli {
@@ -19,6 +20,8 @@ fn main() {
         (1, 2) => Ok(day01::part2(input_file)),
         (2, 1) => Ok(day02::part1(input_file)),
         (2, 2) => Ok(day02::part2(input_file)),
+        (3, 1) => Ok(day03::part1(input_file)),
+        (3, 2) => Ok(day03::part2(input_file)),
         _ => Err("Unsupported solution"),
     };
 
