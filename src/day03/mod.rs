@@ -24,7 +24,7 @@ fn inverse_binary_string(number: String) -> String {
         .collect::<String>();
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> usize {
     let numbers = parse_input(input);
     let majority = numbers.len() / 2;
 
@@ -36,8 +36,8 @@ pub fn part1(input: String) -> i32 {
         .collect::<String>();
     let epislon_rate_binary = inverse_binary_string(gamma_rate_binary.clone());
 
-    let gamma_rate = i32::from_str_radix(&gamma_rate_binary, 2).unwrap();
-    let epislon_rate = i32::from_str_radix(&epislon_rate_binary, 2).unwrap();
+    let gamma_rate = usize::from_str_radix(&gamma_rate_binary, 2).unwrap();
+    let epislon_rate = usize::from_str_radix(&epislon_rate_binary, 2).unwrap();
 
     return gamma_rate * epislon_rate;
 }
@@ -70,15 +70,15 @@ fn find_with_criteria(numbers: Vec<String>, index: usize, criteria: BitCriteria)
     return find_with_criteria(remaining_numbers, index + 1, criteria);
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> usize {
     let numbers = parse_input(input);
 
     let oxygen_generator_rating_binary =
         find_with_criteria(numbers.clone(), 0, BitCriteria::OxygenGeneratorRating);
     let co2_scrubber_rating_binary = find_with_criteria(numbers, 0, BitCriteria::CO2ScrubberRating);
 
-    let oxygen_generator_rating = i32::from_str_radix(&oxygen_generator_rating_binary, 2).unwrap();
-    let co2_scrubber_rating = i32::from_str_radix(&co2_scrubber_rating_binary, 2).unwrap();
+    let oxygen_generator_rating = usize::from_str_radix(&oxygen_generator_rating_binary, 2).unwrap();
+    let co2_scrubber_rating = usize::from_str_radix(&co2_scrubber_rating_binary, 2).unwrap();
 
     return oxygen_generator_rating * co2_scrubber_rating;
 }

@@ -1,16 +1,16 @@
 use std::str::FromStr;
 
 enum Instruction {
-    Forwards(i32),
-    Up(i32),
-    Down(i32),
+    Forwards(isize),
+    Up(isize),
+    Down(isize),
 }
 
 #[derive(Debug, Clone)]
 struct Coordinates {
-    x: i32,
-    y: i32,
-    aim: i32,
+    x: isize,
+    y: isize,
+    aim: isize,
 }
 
 fn parse_input(input: String) -> Vec<Instruction> {
@@ -45,7 +45,7 @@ impl FromStr for Instruction {
     }
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> isize {
     let instructions = parse_input(input);
     let coords = Coordinates { x: 0, y: 0, aim: 0 };
 
@@ -70,7 +70,7 @@ pub fn part1(input: String) -> i32 {
     return x * y;
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> isize {
     let instructions = parse_input(input);
     let coords = Coordinates { x: 0, y: 0, aim: 0 };
 

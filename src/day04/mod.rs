@@ -99,7 +99,7 @@ fn count_score(state: GameState) -> u16 {
     }
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> usize {
     let game = parse_input(input);
 
     let score = count_score(play_bingo_till_first(game));
@@ -107,7 +107,7 @@ pub fn part1(input: String) -> i32 {
     return score.into();
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> usize {
     let game = parse_input(input);
 
     let score = count_score(play_bingo_till_last(game));

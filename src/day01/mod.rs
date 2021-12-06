@@ -1,4 +1,4 @@
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> usize {
   let parsed_input: Vec<i32> = parse_input(input);
   return parsed_input
     .windows(2)
@@ -8,7 +8,7 @@ pub fn part1(input: String) -> i32 {
     .unwrap();
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> usize {
   let parsed_input: Vec<i32> = parse_input(input);
 
   return parsed_input

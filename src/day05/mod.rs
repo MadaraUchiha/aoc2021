@@ -97,7 +97,7 @@ fn parse_input(input: String) -> Vec<Line> {
         .collect();
 }
 
-fn count_intersections(lines: Vec<Line>) -> i32 {
+fn count_intersections(lines: Vec<Line>) -> usize {
     let mut board = vec![vec![0i16; 1000]; 1000];
     let mut count = 0;
 
@@ -118,7 +118,7 @@ fn count_intersections(lines: Vec<Line>) -> i32 {
     return count;
 }
 
-pub fn part1(input: String) -> i32 {
+pub fn part1(input: String) -> usize {
     let lines = parse_input(input);
 
     let straight_lines = lines
@@ -130,7 +130,7 @@ pub fn part1(input: String) -> i32 {
     return count_intersections(straight_lines);
 }
 
-pub fn part2(input: String) -> i32 {
+pub fn part2(input: String) -> usize {
     let lines = parse_input(input);
 
     return count_intersections(lines);

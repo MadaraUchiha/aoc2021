@@ -20,8 +20,8 @@ fn main() {
     let result = match (day, part) {
         (1, 1) => Ok(day01::part1(input_file)),
         (1, 2) => Ok(day01::part2(input_file)),
-        (2, 1) => Ok(day02::part1(input_file)),
-        (2, 2) => Ok(day02::part2(input_file)),
+        (2, 1) => Ok(day02::part1(input_file).try_into().unwrap()),
+        (2, 2) => Ok(day02::part2(input_file).try_into().unwrap()),
         (3, 1) => Ok(day03::part1(input_file)),
         (3, 2) => Ok(day03::part2(input_file)),
         (4, 1) => Ok(day04::part1(input_file)),
