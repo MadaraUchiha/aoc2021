@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 fn parse_input(input: String) -> Vec<Vec<usize>> {
     return input
         .split('\n')
@@ -36,15 +38,16 @@ fn find_local_minima(board: &Vec<Vec<usize>>) -> Vec<(usize, usize)> {
     return result;
 }
 
-fn find_basin(
-    board: &Vec<Vec<usize>>,
-    known_basin: Vec<(usize, usize)>,
-    checked_positions: Vec<(usize, usize)>,
-) -> Vec<(usize, usize)> {
-    let mut new_basin = known_basin.clone();
-    let mut checked_positions_copy = checked_positions.clone();
+fn find_basin_size(board: &Vec<Vec<usize>>, local_minimum: (usize, usize)) -> usize {
+    let mut found: HashSet<(usize, usize)> = HashSet::from([local_minimum]);
+    let mut to_visit: Vec<(usize, usize)> = vec![local_minimum];
+    let mut size = 0;
 
-    for &(x, y) in &known_basin {
+    let mut i = 0;
+    while i < to_visit.len() {
+        size += 1;
+
+        let (x, y) = to_visit[i];
         let mut around = vec![(x, y + 1), (x + 1, y)];
 
         if x != 0 {
@@ -55,20 +58,25 @@ fn find_basin(
         }
 
         for (x_around, y_around) in around {
-            if !checked_positions_copy.contains(&(x_around, y_around))
-                && *board.get(y_around).and_then(|row| row.get(x_around)).unwrap_or(&usize::MAX) < 9
-            {
-                new_basin.push((x_around, y_around));
-                checked_positions_copy.push((x_around, y_around));
+            if found.contains(&(x_around, y_around)) {
+                continue;
             }
+            let &value = board
+                .get(y_around)
+                .and_then(|row| row.get(x_around))
+                .unwrap_or(&9);
+            if value == 9 {
+                continue;
+            }
+
+            found.insert((x_around, y_around));
+            to_visit.push((x_around, y_around));
         }
+
+        i += 1;
     }
 
-    if new_basin.len() == known_basin.len() {
-        return new_basin;
-    }
-    return find_basin(board, new_basin, checked_positions_copy);
-    
+    return size;
 }
 
 pub fn part1(input: String) -> usize {
@@ -85,8 +93,7 @@ pub fn part2(input: String) -> usize {
 
     let mut basins = find_local_minima(&board)
         .iter()
-        .map(|&(x, y)| find_basin(&board, vec![(x, y)], vec![(x, y)]))
-        .map(|basin| basin.len())
+        .map(|&(x, y)| find_basin_size(&board, (x, y)))
         .collect::<Vec<_>>();
 
     basins.sort_by(|a, b| b.cmp(a));
