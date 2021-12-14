@@ -1,4 +1,5 @@
 use std::fs;
+use std::time::Instant;
 use structopt::StructOpt;
 
 mod day01;
@@ -14,6 +15,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 
 #[derive(StructOpt)]
 struct Cli {
@@ -54,6 +56,8 @@ fn main() {
         (12, 2) => Ok(day12::part2(input_file)),
         (13, 1) => Ok(day13::part1(input_file)),
         (13, 2) => Ok(day13::part2(input_file)),
+        (14, 1) => Ok(day14::part1(input_file)),
+        (14, 2) => Ok(day14::part2(input_file)),
         _ => Err("Unsupported solution"),
     };
 
