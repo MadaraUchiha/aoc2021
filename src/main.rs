@@ -28,7 +28,7 @@ fn main() {
     let now = Instant::now();
     let file_name = format!("src/day{:02}/input.txt", day);
     let input_file = fs::read_to_string(file_name).expect("Failed to read file");
-    let file_read_time = now.elapsed().as_micros() as f64 / 1000f64;
+    let file_read_time = now.elapsed();
     let result = match (day, part) {
         (1, 1) => Ok(day01::part1(input_file)),
         (1, 2) => Ok(day01::part2(input_file)),
@@ -62,11 +62,11 @@ fn main() {
     };
 
     println!(
-        "Day {} Part {} - Result is: {} -- Took {}ms (file read took {}ms)",
+        "Day {} Part {} - Result is: {} -- Took {:?} (file read took {:?})",
         day,
         part,
         result.expect(&format!("day {} part {} not implemented", day, part)),
-        now.elapsed().as_millis(),
+        now.elapsed(),
         file_read_time,
     );
 }
