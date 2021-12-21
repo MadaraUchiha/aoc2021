@@ -19,6 +19,7 @@ mod day14;
 mod day15;
 mod day16;
 mod day17;
+mod day18;
 
 #[derive(StructOpt)]
 struct Cli {
@@ -67,6 +68,8 @@ fn main() {
         (16, 2) => Ok(day16::part2(input_file)),
         (17, 1) => Ok(day17::part1(input_file)),
         (17, 2) => Ok(day17::part2(input_file)),
+        (18, 1) => Ok(day18::part1(input_file)),
+        (18, 2) => Ok(day18::part2(input_file)),
         _ => Err("Unsupported solution"),
     };
 
