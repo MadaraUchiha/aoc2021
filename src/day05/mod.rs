@@ -1,43 +1,22 @@
-use std::str::FromStr;
-
-#[derive(Clone)]
-struct Vector {
-    x: i32,
-    y: i32,
-}
-
-impl FromStr for Vector {
-    type Err = &'static str;
-    fn from_str(input: &str) -> Result<Self, <Self as FromStr>::Err> {
-        match input.split_once(',') {
-            None => Err("Split failed"),
-            Some((x, y)) => match (x.parse(), y.parse()) {
-                (Ok(x), Ok(y)) => Ok(Vector { x, y }),
-                _ => Err("Parse failed"),
-            },
-        }
-    }
-}
+use aoc2021::Vec2;
 
 #[derive(Clone)]
 struct Line {
-    a: Vector,
-    b: Vector,
+    a: Vec2,
+    b: Vec2,
 }
 impl Line {
     fn is_90_deg(&self) -> bool {
-        let Vector { x, y } = self.iter_direction();
+        let Vec2(x, y) = self.iter_direction();
         return x * y == 0;
     }
-    fn iter_direction(&self) -> Vector {
-        return Vector {
-            x: (self.b.x - self.a.x).signum(),
-            y: (self.b.y - self.a.y).signum(),
-        };
+    fn iter_direction(&self) -> Vec2 {
+        let Vec2(x, y) = &self.b - &self.a;
+        Vec2(x.signum(), y.signum())
     }
 }
 impl IntoIterator for Line {
-    type Item = Vector;
+    type Item = Vec2;
     type IntoIter = LineIterator;
     fn into_iter(self) -> <Self as std::iter::IntoIterator>::IntoIter {
         return LineIterator::new(self);
@@ -45,7 +24,7 @@ impl IntoIterator for Line {
 }
 struct LineIterator {
     line: Line,
-    iter_state: Vector,
+    iter_state: Vec2,
 }
 impl LineIterator {
     fn new(line: Line) -> LineIterator {
@@ -58,31 +37,19 @@ impl LineIterator {
 }
 
 impl Iterator for LineIterator {
-    type Item = Vector;
+    type Item = Vec2;
     fn next(&mut self) -> Option<<Self as IntoIterator>::Item> {
-        let Vector {
-            x: x_advance,
-            y: y_advance,
-        } = self.line.iter_direction();
-        let Vector { x, y } = self.iter_state.clone();
-        let next = Vector {
-            x: x + x_advance,
-            y: y + y_advance,
-        };
-        let Vector {
-            x: last_x,
-            y: last_y,
-        } = Vector {
-            x: self.line.b.x + x_advance,
-            y: self.line.b.y + y_advance,
-        };
+        let advance_vec = self.line.iter_direction();
+        let curr_state = self.iter_state.clone();
+        let next = &curr_state + &advance_vec;
+        let last = &self.line.b + &advance_vec;
 
-        if x == last_x && y == last_y {
+        if curr_state == last {
             return None;
         }
 
         self.iter_state = next;
-        return Some(Vector { x, y });
+        return Some(curr_state);
     }
 }
 
@@ -91,8 +58,8 @@ fn parse_input(input: String) -> Vec<Line> {
         .split('\n')
         .map(|text_line| text_line.split(" -> ").collect())
         .map(|points: Vec<_>| Line {
-            a: Vector::from_str(points[0]).unwrap(),
-            b: Vector::from_str(points[1]).unwrap(),
+            a: points[0].parse().unwrap(),
+            b: points[1].parse().unwrap(),
         })
         .collect();
 }
@@ -102,7 +69,7 @@ fn count_intersections(lines: Vec<Line>) -> usize {
     let mut count = 0;
 
     for line in lines {
-        for Vector { x, y } in line {
+        for Vec2(x, y) in line {
             board[y as usize][x as usize] += 1;
         }
     }

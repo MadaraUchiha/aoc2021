@@ -20,6 +20,7 @@ mod day15;
 mod day16;
 mod day17;
 mod day18;
+mod day19;
 mod day20;
 mod day21;
 mod day22;
@@ -76,6 +77,8 @@ fn main() {
         (17, 2) => Ok(day17::part2(input_file)),
         (18, 1) => Ok(day18::part1(input_file)),
         (18, 2) => Ok(day18::part2(input_file)),
+        (19, 1) => Ok(day19::part1(input_file)),
+        (19, 2) => Ok(day19::part2(input_file)),
         (20, 1) => Ok(day20::part1(input_file)),
         (20, 2) => Ok(day20::part2(input_file)),
         (21, 1) => Ok(day21::part1(input_file)),

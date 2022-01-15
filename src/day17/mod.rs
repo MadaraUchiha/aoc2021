@@ -1,23 +1,7 @@
+use aoc2021::Vec2;
 use std::collections::HashSet;
-use std::ops::Add;
 use std::ops::RangeInclusive;
 use std::str::FromStr;
-
-#[derive(Clone, PartialEq, Eq, Hash, Debug)]
-struct Vec2 {
-  x: isize,
-  y: isize,
-}
-
-impl Add for Vec2 {
-  fn add(self, other: Self) -> Self {
-    Vec2 {
-      x: self.x + other.x,
-      y: self.y + other.y,
-    }
-  }
-  type Output = Vec2;
-}
 
 struct Probe {
   velocity: Vec2,
@@ -28,14 +12,14 @@ impl Probe {
   pub fn new(initial_velocity: Vec2) -> Self {
     Probe {
       velocity: initial_velocity,
-      position: Vec2 { x: 0, y: 0 },
+      position: Vec2(0, 0),
     }
   }
 
   pub fn tick(&self) -> Self {
-    let mut new_velocity = self.velocity.clone() + Vec2 { x: -1, y: -1 };
-    if new_velocity.x < 0 {
-      new_velocity.x = 0;
+    let mut new_velocity = self.velocity.clone() + Vec2(-1, -1);
+    if new_velocity.0 < 0 {
+      new_velocity.0 = 0;
     }
     Probe {
       position: self.position.clone() + self.velocity.clone(),
@@ -44,11 +28,11 @@ impl Probe {
   }
 
   pub fn missed(&self, zone: &LandingZone) -> bool {
-    self.position.x > *zone.x.end() || self.position.y < *zone.y.start()
+    self.position.0 > *zone.x.end() || self.position.1 < *zone.y.start()
   }
 
   pub fn landed(&self, zone: &LandingZone) -> bool {
-    zone.x.contains(&self.position.x) && zone.y.contains(&self.position.y)
+    zone.x.contains(&self.position.0) && zone.y.contains(&self.position.1)
   }
 }
 
@@ -89,7 +73,7 @@ fn find_all_viable_trajectories(zone: LandingZone) -> HashSet<Vec2> {
 
   for vx in 0..=max_vx {
     for vy in -max_vy..=max_vy {
-      let vel = Vec2 { x: vx, y: vy };
+      let vel = Vec2(vx, vy);
       let mut probe = Probe::new(vel.clone());
       loop {
         probe = probe.tick();
