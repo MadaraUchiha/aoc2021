@@ -23,6 +23,9 @@ mod day18;
 mod day20;
 mod day21;
 mod day22;
+mod day23;
+mod day24;
+mod day25;
 
 #[derive(StructOpt)]
 struct Cli {
@@ -79,6 +82,12 @@ fn main() {
         (21, 2) => Ok(day21::part2(input_file)),
         (22, 1) => Ok(day22::part1(input_file)),
         (22, 2) => Ok(day22::part2(input_file)),
+        (23, 1) => Ok(day23::part1(input_file)),
+        (23, 2) => Ok(day23::part2(input_file)),
+        (24, 1) => Ok(day24::part1(input_file)),
+        (24, 2) => Ok(day24::part2(input_file)),
+        (25, 1) => Ok(day25::part1(input_file)),
+        (25, 2) => Ok(day25::part2(input_file)),
         _ => Err("Unsupported solution"),
     };
 

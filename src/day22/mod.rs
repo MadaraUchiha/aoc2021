@@ -1,25 +1,6 @@
 use anyhow::{anyhow, Result};
 use std::str::FromStr;
-
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
-struct Vec3(isize, isize, isize);
-
-impl Vec3 {
-  pub fn min(a: &Self, b: &Self) -> Self {
-    Self(
-      isize::min(a.0, b.0),
-      isize::min(a.1, b.1),
-      isize::min(a.2, b.2),
-    )
-  }
-  pub fn max(a: &Self, b: &Self) -> Self {
-    Self(
-      isize::max(a.0, b.0),
-      isize::max(a.1, b.1),
-      isize::max(a.2, b.2),
-    )
-  }
-}
+use aoc2021::Vec3;
 
 #[derive(Clone)]
 struct Cuboid {
